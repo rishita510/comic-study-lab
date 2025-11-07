@@ -37,8 +37,4 @@ npm run dev
 ```
 
 If you prefer not to use nvm, upgrade Node with your system package manager or Node installer to one of the supported versions above.
-# comic-study-lab
-# comic-study-lab
-# comic-study-lab
-# comic-study-lab
-# comic-study-lab
+
