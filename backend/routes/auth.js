@@ -39,7 +39,9 @@ router.post("/signup", async (req, res) => {
       password: hashedPassword,
     });
 
-  const token = jwt.sign({ userId: newUser._id }, jwtSecret, { expiresIn: "7d" });
+    const token = jwt.sign({ userId: newUser._id, role: newUser.role || "user" }, jwtSecret, {
+      expiresIn: "7d",
+    });
 
     res.status(201).json({
       message: "User created successfully",
@@ -51,6 +53,7 @@ router.post("/signup", async (req, res) => {
         age: newUser.age,
         gender: newUser.gender,
         country: newUser.country,
+        role: newUser.role,
       },
     });
   } catch (error) {
@@ -82,7 +85,8 @@ router.post("/signin", async (req, res) => {
       return res.status(500).json({ message: "Server missing JWT secret" });
     }
 
-    const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: "7d" });
+  const role = user.role || "user";
+    const token = jwt.sign({ userId: user._id, role }, jwtSecret, { expiresIn: "7d" });
 
     res.json({
       message: "Signed in successfully",
@@ -94,6 +98,7 @@ router.post("/signin", async (req, res) => {
         age: user.age,
         gender: user.gender,
         country: user.country,
+        role,
       },
     });
   } catch (error) {

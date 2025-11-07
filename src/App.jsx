@@ -7,6 +7,8 @@ import Page4 from "./page4.jsx";
 import Page5 from "./page5.jsx";
 import Page6 from "./page6.jsx";
 import Page7 from "./page7.jsx";
+import AdminDashboard from "./adminDashboard.jsx";
+import PostsPage from "./postsPage.jsx";
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
       <Route path="/page5" element={<Page5 />} />
       <Route path="/page6" element={<Page6 />} />
       <Route path="/page7" element={<Page7 />} />
+      <Route path="/dashboard" element={<AdminDashboard />} />
+  <Route path="/posts" element={<PostsPage />} />
     </Routes>
   );
 }

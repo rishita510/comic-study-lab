@@ -8,6 +8,11 @@ const userSchema = new mongoose.Schema(
     gender: { type: String },
     country: { type: String },
     password: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ["admin", "user"],
+      default: "user",
+    },
   },
   { timestamps: true }
 );

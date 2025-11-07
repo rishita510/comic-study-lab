@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./page7.css";
 import Bg from "./components/bg.jsx";
 import envelopeImage from "./assets/envelope.png"; 
 
 function Page7() {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const navigate = useNavigate();
   const [signInData, setSignInData] = useState({ email: "", password: "" });
   const [signUpData, setSignUpData] = useState({
     name: "",
@@ -16,6 +18,32 @@ function Page7() {
   });
   const [signInStatus, setSignInStatus] = useState(null);
   const [signUpStatus, setSignUpStatus] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("cs_lab_token");
+    const storedUser = localStorage.getItem("cs_lab_user");
+
+    if (token && storedUser) {
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        const destination = parsedUser?.role === "admin" ? "/dashboard" : "/posts";
+        navigate(destination, { replace: true });
+      } catch (error) {
+        localStorage.removeItem("cs_lab_user");
+      }
+    }
+  }, [navigate]);
+
+  const handleAuthSuccess = (data, defaultMessage, setStatus, resetForm) => {
+    localStorage.setItem("cs_lab_token", data.token);
+    if (data.user) {
+      localStorage.setItem("cs_lab_user", JSON.stringify(data.user));
+    }
+    setStatus({ type: "success", message: data.message || defaultMessage });
+    resetForm();
+    const destination = data.user?.role === "admin" ? "/dashboard" : "/posts";
+    navigate(destination, { replace: true });
+  };
 
   const handleSignInChange = (event) => {
     const { name, value } = event.target;
@@ -55,9 +83,12 @@ function Page7() {
         return;
       }
 
-      localStorage.setItem("cs_lab_token", data.token);
-      setSignInStatus({ type: "success", message: data.message || "Signed in successfully." });
-      setSignInData({ email: "", password: "" });
+      handleAuthSuccess(
+        data,
+        "Signed in successfully.",
+        setSignInStatus,
+        () => setSignInData({ email: "", password: "" })
+      );
     } catch (error) {
       setSignInStatus({ type: "error", message: "Server error. Try again later." });
     }
@@ -95,9 +126,20 @@ function Page7() {
         return;
       }
 
-      localStorage.setItem("cs_lab_token", data.token);
-      setSignUpStatus({ type: "success", message: data.message || "Thanks for signing up." });
-      setSignUpData({ name: "", email: "", password: "", age: "", gender: "", country: "" });
+      handleAuthSuccess(
+        data,
+        "Thanks for signing up.",
+        setSignUpStatus,
+        () =>
+          setSignUpData({
+            name: "",
+            email: "",
+            password: "",
+            age: "",
+            gender: "",
+            country: "",
+          })
+      );
     } catch (error) {
       setSignUpStatus({ type: "error", message: "Server error. Try again later." });
     }

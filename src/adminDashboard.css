@@ -1,0 +1,243 @@
+.dashboard-container {
+  position: relative;
+  min-height: 100vh;
+  background: url("/src/assets/page5bg.png") repeat center top;
+  color: #3b4a37;
+  font-family: "Comic Neue", cursive;
+}
+
+.dashboard-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.dashboard-header h1 {
+  font-size: 3rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logout-button {
+  border: none;
+  background: rgba(59, 74, 55, 0.1);
+  color: #3b4a37;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.logout-button:hover {
+  background: rgba(59, 74, 55, 0.2);
+}
+
+.dashboard-header p {
+  margin: 0;
+  font-size: 1.2rem;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+.upload-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 18px 38px rgba(59, 74, 55, 0.08);
+}
+
+.upload-panel h2,
+.uploads-list h2 {
+  margin: 0 0 1rem;
+  font-size: 2rem;
+}
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.upload-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  font-size: 1.1rem;
+}
+
+.upload-form textarea {
+  border: 1px solid rgba(59, 74, 55, 0.3);
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-family: inherit;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 8rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: inherit;
+}
+
+.upload-form textarea:focus {
+  outline: 2px solid rgba(59, 74, 55, 0.4);
+}
+
+.upload-form input[type="file"] {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.upload-word-count {
+  font-size: 0.95rem;
+  color: rgba(59, 74, 55, 0.7);
+}
+
+.upload-submit-button {
+  align-self: flex-start;
+  padding: 0.6rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  background: #3b4a37;
+  color: #f7f4ef;
+  font-family: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.upload-submit-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(59, 74, 55, 0.15);
+}
+
+.upload-status {
+  font-size: 1rem;
+}
+
+.upload-status-error {
+  color: #7d2b2b;
+}
+
+.upload-status-success {
+  color: #3b4a37;
+}
+
+.uploads-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 18px 38px rgba(59, 74, 55, 0.08);
+}
+
+.uploads-placeholder {
+  font-size: 1.1rem;
+  color: rgba(59, 74, 55, 0.7);
+}
+
+.uploads-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.upload-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(247, 244, 239, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 20px rgba(59, 74, 55, 0.08);
+  overflow: hidden;
+}
+
+.upload-preview {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.upload-preview-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.upload-preview-audio,
+.upload-preview-video,
+.upload-preview-pdf {
+  width: 100%;
+  border: none;
+}
+
+.upload-preview-video {
+  max-height: 220px;
+}
+
+.upload-preview-pdf {
+  min-height: 220px;
+}
+
+.upload-preview-link {
+  color: #3b4a37;
+  text-decoration: underline;
+  font-size: 1rem;
+}
+
+.upload-meta h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  word-wrap: break-word;
+}
+
+.upload-description {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.upload-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: rgba(59, 74, 55, 0.7);
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 3rem 1.25rem 4rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.4rem;
+  }
+
+  .upload-panel,
+  .uploads-list {
+    padding: 1.5rem;
+  }
+}
