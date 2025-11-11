@@ -206,6 +206,42 @@ function AdminDashboard() {
     navigate("/page7", { replace: true });
   };
 
+  const handleDelete = async (uploadId) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/uploads/${uploadId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (response.status === 401) {
+        localStorage.removeItem("cs_lab_token");
+        localStorage.removeItem("cs_lab_user");
+        navigate("/page7", { replace: true });
+        return;
+      }
+
+      if (response.status === 403) {
+        setStatus({ type: "error", message: "Only admins can delete posts." });
+        return;
+      }
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Delete failed. Please try again.");
+      }
+
+      setUploads((prev) => prev.filter((upload) => upload._id !== uploadId));
+      setStatus({ type: "success", message: "Post deleted successfully." });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  };
+
   const renderPreview = (upload) => {
     const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
     if (upload.fileType.startsWith("image/")) {
@@ -318,6 +354,13 @@ function AdminDashboard() {
                         {new Date(upload.createdAt).toLocaleString()}
                       </time>
                     </div>
+                    <button
+                      type="button"
+                      className="delete-button"
+                      onClick={() => handleDelete(upload._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </article>
               ))}

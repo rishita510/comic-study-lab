@@ -112,4 +112,33 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
   }
 });
 
+router.delete("/:id", authenticate, async (req, res) => {
+  try {
+    if (req.userRole !== "admin") {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+
+    const { id } = req.params;
+    const upload = await Upload.findById(id);
+
+    if (!upload) {
+      return res.status(404).json({ message: "Upload not found" });
+    }
+
+    // Delete the physical file
+    const filePath = path.join(uploadDir, upload.fileName);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    // Delete the database record
+    await Upload.findByIdAndDelete(id);
+
+    res.json({ message: "Upload deleted successfully" });
+  } catch (error) {
+    console.error("Delete upload error", error.message);
+    res.status(500).json({ message: "Unable to delete upload" });
+  }
+});
+
 export default router;
