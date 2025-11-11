@@ -1,5 +1,5 @@
-.bg-container {
-  position: fixed;
+ .bg-container {
+position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -91,4 +91,4 @@
   right: 5%;
   animation-delay: 2.6s;
   width: 30px;
-}
+} 

@@ -9,6 +9,8 @@ import Page6 from "./page6.jsx";
 import Page7 from "./page7.jsx";
 import AdminDashboard from "./adminDashboard.jsx";
 import PostsPage from "./postsPage.jsx";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 
 function App() {
   return (
