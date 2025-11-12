@@ -27,4 +27,5 @@ function Bg(props) {
   );
 }
 
-export default Bg;
+export default Bg; 
+  

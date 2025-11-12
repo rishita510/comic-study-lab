@@ -227,6 +227,29 @@
   color: rgba(59, 74, 55, 0.7);
 }
 
+.delete-button {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #7d2b2b;
+  background: rgba(125, 43, 43, 0.1);
+  color: #7d2b2b;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.delete-button:hover {
+  background: rgba(125, 43, 43, 0.2);
+  transform: translateY(-1px);
+}
+
+.delete-button:active {
+  transform: translateY(0);
+}
+
 @media (max-width: 768px) {
   .dashboard-content {
     padding: 3rem 1.25rem 4rem;
