@@ -14,13 +14,11 @@ function Page4() {
   
   return (
     <div>
-      <Bg style={{backgroundColor:"White"}}></Bg>
-      <Heading style={{color:"rgb(64,76,66)"}} />
-      
+    
     <div className="page4-container">
-      <Bg/>
-      <Heading style={{ color: "rgb(64,76,66)" }} />
-
+      <Bg style={{backgroundColor:"black"}}></Bg>
+      <Heading style={{color:"white"}} />
+      
       <div className="content">
         <div className="section courses">
           <h3>Courses: Intro to Comics Studies</h3>
