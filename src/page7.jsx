@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./page7.css";
 import Bg from "./components/bg.jsx";
-import envelopeImage from "./assets/envelope.png"; 
+import envelopeImage from "./assets/envelope.png";
 
 function Page7() {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const navigate = useNavigate();
+
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewText, setReviewText] = useState("");
+
   const [signInData, setSignInData] = useState({ email: "", password: "" });
   const [signUpData, setSignUpData] = useState({
     name: "",
@@ -273,6 +277,46 @@ function Page7() {
           )}
         </form>
       </div>
+      {/* === Leave Review Button === */}
+<button
+  className="leave-review-button"
+  onClick={() => setShowReviewModal(true)}
+>
+  💬 Leave Review
+</button>
+
+{/* === Review Modal === */}
+{showReviewModal && (
+  <div className="review-modal-overlay">
+    <div className="review-modal">
+      <button className="close-review-modal" onClick={() => setShowReviewModal(false)}>
+        ✕
+      </button>
+      <h3 className="review-modal-title">Share Your Review</h3>
+      <textarea
+        className="review-textarea"
+        placeholder="Write your review here..."
+        value={reviewText}
+        onChange={(e) => setReviewText(e.target.value)}
+      />
+      <button
+        className="submit-review-button"
+        onClick={() => {
+          if (reviewText.trim()) {
+            alert("Thank you for your feedback!");
+            setReviewText("");
+            setShowReviewModal(false);
+          } else {
+            alert("Please write something before submitting.");
+          }
+        }}
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

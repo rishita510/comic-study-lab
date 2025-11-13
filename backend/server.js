@@ -48,4 +48,21 @@ async function startServer() {
   }
 }
 
+app.post("/api/reviews", async (req, res) => {
+  try {
+    const { reviewText, user } = req.body;
+
+    if (!reviewText) {
+      return res.status(400).json({ message: "Review text is required" });
+    }
+
+    await Review.create({ text: reviewText, user, date: new Date() });
+
+    res.json({ message: "Review submitted successfully!" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 startServer();
