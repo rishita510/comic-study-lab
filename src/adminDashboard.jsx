@@ -37,6 +37,7 @@ function AdminDashboard() {
   const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  const [link, setLink] = useState("");
   const [uploads, setUploads] = useState([]);
   const [status, setStatus] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -123,6 +124,19 @@ function AdminDashboard() {
     setFile(selectedFile);
   };
 
+  const handleLinkChange = (event) => {
+    setLink(event.target.value);
+  };
+
+  const isValidUrl = (value) => {
+    try {
+      const parsed = new URL(value);
+      return ["http:", "https:"].includes(parsed.protocol);
+    } catch (_error) {
+      return false;
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -155,9 +169,21 @@ function AdminDashboard() {
       return;
     }
 
+    const trimmedLink = link.trim();
+    if (trimmedLink && !isValidUrl(trimmedLink)) {
+      setStatus({
+        type: "error",
+        message: "Please enter a valid URL (include http:// or https://).",
+      });
+      return;
+    }
+
     const formData = new FormData();
     formData.append("description", description.trim());
     formData.append("file", file);
+    if (trimmedLink) {
+      formData.append("link", trimmedLink);
+    }
 
     try {
       setStatus(null);
@@ -189,6 +215,7 @@ function AdminDashboard() {
       setUploads((prev) => [data, ...prev]);
       setDescription("");
       setFile(null);
+      setLink("");
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -204,6 +231,35 @@ function AdminDashboard() {
     localStorage.removeItem("cs_lab_token");
     localStorage.removeItem("cs_lab_user");
     navigate("/page7", { replace: true });
+  };
+
+  const handleOpen = (upload) => {
+    const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
+    window.open(fileUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDownload = async (upload) => {
+    const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
+
+    try {
+      const response = await fetch(fileUrl);
+
+      if (!response.ok) {
+        throw new Error("Unable to download file. Please try again.");
+      }
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = upload.originalName || upload.fileName || "download";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
   };
 
   const handleDelete = async (uploadId) => {
@@ -278,10 +334,29 @@ function AdminDashboard() {
 
     return (
       <a href={fileUrl} className="upload-preview-link" target="_blank" rel="noreferrer">
-        Download {upload.originalName}
+        Open {upload.originalName}
       </a>
     );
   };
+
+  const renderActions = (upload) => (
+    <div className="upload-actions">
+      <button
+        type="button"
+        className="upload-action-button"
+        onClick={() => handleOpen(upload)}
+      >
+        View
+      </button>
+      <button
+        type="button"
+        className="upload-action-button"
+        onClick={() => handleDownload(upload)}
+      >
+        Download
+      </button>
+    </div>
+  );
 
   return (
     <div className="dashboard-container">
@@ -313,6 +388,17 @@ function AdminDashboard() {
             <div className="upload-word-count">
               {currentWordCount}/{MAX_WORDS} words
             </div>
+            <label className="upload-label" htmlFor="upload-link">
+              <span>Link</span>
+              <input
+                id="upload-link"
+                name="link"
+                type="url"
+                value={link}
+                onChange={handleLinkChange}
+                placeholder="https://example.com"
+              />
+            </label>
             <label className="upload-label" htmlFor="upload-file">
               <span>File</span>
               <input
@@ -348,6 +434,17 @@ function AdminDashboard() {
                   <div className="upload-meta">
                     <h3>{upload.originalName}</h3>
                     <p className="upload-description">{upload.description}</p>
+                    {upload.link && (
+                      <a
+                        href={upload.link}
+                        className="upload-external-link"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Visit Link
+                      </a>
+                    )}
+                    {renderActions(upload)}
                     <div className="upload-footer">
                       <span>{formatFileSize(upload.fileSize)}</span>
                       <time dateTime={upload.createdAt}>

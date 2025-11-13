@@ -110,6 +110,11 @@ function Page7() {
       return;
     }
 
+    if (signUpData.password.length < 6) {
+      setSignUpStatus({ type: "error", message: "Password must be at least 6 characters long." });
+      return;
+    }
+
     const ageNumber = Number(signUpData.age);
     if (signUpData.age && (Number.isNaN(ageNumber) || ageNumber <= 0)) {
       setSignUpStatus({ type: "error", message: "Age must be a positive number." });
