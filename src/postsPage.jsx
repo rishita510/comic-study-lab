@@ -51,6 +51,35 @@ function PostsPage() {
     navigate("/page7", { replace: true });
   };
 
+  const handleOpen = (upload) => {
+    const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
+    window.open(fileUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleDownload = async (upload) => {
+    const fileUrl = buildFileUrl(API_URL, upload.fileUrl);
+
+    try {
+      const response = await fetch(fileUrl);
+
+      if (!response.ok) {
+        throw new Error("Unable to download file. Please try again.");
+      }
+
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = upload.originalName || upload.fileName || "download";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      setStatus({ type: "error", message: error.message });
+    }
+  };
+
   useEffect(() => {
     if (!token) {
       navigate("/page7", { replace: true });
@@ -142,10 +171,29 @@ function PostsPage() {
 
     return (
       <a href={fileUrl} className="post-preview-link" target="_blank" rel="noreferrer">
-        Download {upload.originalName}
+        Open {upload.originalName}
       </a>
     );
   };
+
+  const renderActions = (upload) => (
+    <div className="post-actions">
+      <button
+        type="button"
+        className="post-action-button"
+        onClick={() => handleOpen(upload)}
+      >
+        View
+      </button>
+      <button
+        type="button"
+        className="post-action-button"
+        onClick={() => handleDownload(upload)}
+      >
+        Download
+      </button>
+    </div>
+  );
 
   return (
     <div className="posts-container">
@@ -175,6 +223,17 @@ function PostsPage() {
                 <div className="post-meta">
                   <h3>{upload.originalName}</h3>
                   <p className="post-description">{upload.description}</p>
+                  {upload.link && (
+                    <a
+                      href={upload.link}
+                      className="post-external-link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Visit Link
+                    </a>
+                  )}
+                  {renderActions(upload)}
                   <div className="post-footer">
                     <span>{formatFileSize(upload.fileSize)}</span>
                     <time dateTime={upload.createdAt}>

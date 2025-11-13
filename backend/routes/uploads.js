@@ -82,9 +82,21 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
       return res.status(403).json({ message: "Admin access required" });
     }
 
-    const { description } = req.body;
+    const { description, link } = req.body;
     if (!description || !description.trim()) {
       return res.status(400).json({ message: "Description is required" });
+    }
+
+    const trimmedLink = link?.trim();
+    if (trimmedLink) {
+      try {
+        const parsed = new URL(trimmedLink);
+        if (!["http:", "https:"].includes(parsed.protocol)) {
+          return res.status(400).json({ message: "Link must start with http:// or https://" });
+        }
+      } catch (_error) {
+        return res.status(400).json({ message: "Link must be a valid URL" });
+      }
     }
 
     if (!req.file) {
@@ -97,6 +109,7 @@ router.post("/", authenticate, upload.single("file"), async (req, res) => {
 
     const newUpload = await Upload.create({
       description: description.trim(),
+      link: trimmedLink || undefined,
       fileName: req.file.filename,
       originalName: req.file.originalname,
       fileType: req.file.mimetype,

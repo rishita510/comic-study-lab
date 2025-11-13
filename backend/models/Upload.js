@@ -8,6 +8,10 @@ const uploadSchema = new mongoose.Schema(
       trim: true,
       maxlength: 10000,
     },
+    link: {
+      type: String,
+      trim: true,
+    },
     fileName: {
       type: String,
       required: true,
