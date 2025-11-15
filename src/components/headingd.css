@@ -31,7 +31,13 @@
   letter-spacing: 1px;
   transition: all 0.4s ease;
   text-shadow: 0 0 16px #ffd166;
+  
 }
+
+  
+
+.heading-line1 {
+  margin-bottom: 10px;}
 .heading-line1:hover{
   cursor:pointer;
   text-shadow:0 0 40px #ffd166;
