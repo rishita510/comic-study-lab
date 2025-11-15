@@ -12,7 +12,7 @@ import s1 from "./assets/s1.png";
 import s2 from "./assets/s2.png";
 import s3 from "./assets/s3.png";
 import s4 from "./assets/s4.png";
-
+import Navbar from "./components/Navbar.jsx";
 
 function Page2() {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ function Page2() {
     <div>
       <Bg style={{ backgroundColor: "white" }} />
       <Heading style={{ color: "rgb(64,76,66)", fontSize: "45px" }} />
+     <Navbar/>
 
       <div className="bubbles-container">
         <div className="bubble activity">

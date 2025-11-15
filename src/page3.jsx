@@ -7,7 +7,7 @@ import s2 from "./assets/s2.png";
 import s3 from "./assets/s3.png";
 import s4 from "./assets/s4.png";
 import React from "react";
-
+import Navbar from "./components/Navbar.jsx"
 import Bg from "./components/bg.jsx";
 import "./page3.css";
 
@@ -17,6 +17,7 @@ function Page3() {
     
      <div className="comic-container">
        <Bg style={{ backgroundColor: "Black" }}></Bg>
+       <Navbar/>
       <img src={c1} alt="Comic 1" className="comic-img" />
        <img src={c2} alt="Comic 2" className="comic-img" />
        <div className="characters-container">

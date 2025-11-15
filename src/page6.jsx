@@ -4,12 +4,12 @@ import Bg from "./components/bg.jsx";
 import { Link } from "react-router-dom";
 import s1 from "./assets/s1.png";
 import s2 from "./assets/s2.png";
-
+import Navbar from "./components/Navbar.jsx"
 function Page6() {
   return (
     <div className="page6-container">
       <Bg />
-
+        <Navbar/>
       <h1 className="page6-heading">
         Comics Studies
         <br />

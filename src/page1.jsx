@@ -8,7 +8,7 @@ import s3 from "./assets/s3.png";
 import s4 from "./assets/s4.png";
 import iitjlogo from "./assets/iitjlogo.png"
 import "./page1.css";
-
+import Navbar from "./components/Navbar.jsx"
 function Page1() {
   return (
     <div>
@@ -16,7 +16,7 @@ function Page1() {
       <Heading />
       <img src={iitjlogo} className="IITJ" />
       <p id="p1-main">Our Home in the World of Comics</p>
-
+      <Navbar/>
       {/* Proper working link */}
       <Link id="p1-end" to="/page2">
         Enter

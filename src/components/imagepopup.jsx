@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./imagepopup.css";
 
-const ImagePopUp = ({ imageSrc, title, description }) => {
+const ImagePopUp = ({ imageSrc, title, description, style }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpen = () => {
@@ -21,18 +21,16 @@ const ImagePopUp = ({ imageSrc, title, description }) => {
         alt={title}
         className="popup-thumbnail"
         onClick={handleOpen}
+        style={style}      // ✅ INLINE STYLE NOW APPLIES
       />
 
       {isOpen && (
         <div className="popup-overlay" onClick={handleClose}>
           <div
             className="popup-box"
-            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+            onClick={(e) => e.stopPropagation()}
           >
-            {/*Close (X) Button */}
-            <button className="close-btn" onClick={handleClose}>
-              ✕
-            </button>
+            <button className="close-btn" onClick={handleClose}>✕</button>
 
             <img src={imageSrc} alt={title} className="popup-image" />
             <div className="popup-text">

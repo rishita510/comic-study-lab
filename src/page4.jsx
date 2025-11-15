@@ -9,7 +9,7 @@ import event1 from "./assets/event1.png";
 import event2 from "./assets/event2.png";
 import ImagePopUp from './components/imagepopup.jsx'
 import './page4.css';
-
+import Navbar from "./components/Navbar.jsx"
 function Page4() {
   
   return (
@@ -18,15 +18,17 @@ function Page4() {
     <div className="page4-container">
       <Bg style={{backgroundColor:"black"}}></Bg>
       <Heading style={{color:"white"}} />
-      
+        <Navbar/>
       <div className="content">
         <div className="section courses">
           <h3>Courses: Intro to Comics Studies</h3>
           <ImagePopUp
-            imageSrc={courses}
-            title="Courses"
-            description="Explore exciting courses with interactive content and creative learning paths."
-          />
+  imageSrc={courses}
+  title="Courses"
+  description="Explore exciting courses with interactive content and creative learning paths."
+  style={{ marginTop: "50px" }}
+/>
+
         </div>
 
         <div className="section projects">

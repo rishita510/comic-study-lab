@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Bg from "./components/bg.jsx";
 import "./page5.css";
-
+import Navbar from "./components/Navbar.jsx"
 // Faculty images
 import p1 from "./assets/p1.png";
 import p2 from "./assets/p2.png";
@@ -99,7 +99,7 @@ function Page5() {
   return (
     <div className="page5-container">
       <Bg style={{ backgroundColor: "white" }} />
-
+       <Navbar/>
       <h1 className="page5-heading">
         Comics Studies<br />Lab@IITJ
       </h1>
@@ -131,7 +131,7 @@ function Page5() {
       </div>
 
       {/* === Students Section === */}
-      <div className="students-section">
+      <div className="students-section" style={{ marginTop: "30px" }}>
         <h2 className="student-title">IITJ Students</h2>
         <p>75 students & alumni</p>
       </div>
